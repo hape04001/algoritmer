@@ -14,17 +14,22 @@ namespace SorteringsAlgoritmer
 
             List<int> bblRnd = new List<int>();
             List<int> insRnd = new List<int>();
+            List<int> mergeRnd = new List<int>();
+            List<int> Qsrnd = new List<int>();
 
             Stopwatch bblSW = new Stopwatch();
             Stopwatch insSW = new Stopwatch();
             Stopwatch mergeSW = new Stopwatch();
+            Stopwatch QSsw = new Stopwatch();
 
-            int antal = 10000;
+            int antal = 8000;
 
             for (int i = 0; i < antal; i++)
             {
                 bblRnd.Add(rnd.Next());
                 insRnd.Add(rnd.Next());
+                mergeRnd.Add(rnd.Next());
+                Qsrnd.Add(rnd.Next());
             }
 
             // Bubblesort 
@@ -64,23 +69,27 @@ namespace SorteringsAlgoritmer
             //Merge sort
             mergeSW.Start();
 
-            List<int> mergeRnd = new List<int>();
+            
             List<int> sorted;
 
-            for(int a = 0; a< antal;a++){
-                mergeRnd.Add(rnd.Next(0, 100));
-            }
+            
             Console.WriteLine();
 
             sorted = MergeSort(mergeRnd);
 
             mergeSW.Stop();
 
+            QSsw.Start();
+
+            quicksort(Qsrnd,0,Qsrnd.Count -1);
+
+            QSsw.Stop();
+            
+            
             Console.WriteLine("Bubblesort: " + bblSW.ElapsedMilliseconds);
             Console.WriteLine("Insertionsort: " + insSW.ElapsedMilliseconds);
             Console.WriteLine("Merge sort: " + mergeSW.ElapsedMilliseconds);
-
-
+            Console.WriteLine("Quick Sort: " + QSsw.ElapsedMilliseconds);
         }
 
         private static List<int> MergeSort(List<int> mergeRnd)
@@ -140,6 +149,44 @@ namespace SorteringsAlgoritmer
                 }
             }
             return result;
+
+            
         }
+   
+            private static void quicksort(List<int> lista,int left,int right)
+            {
+                if (left < right){
+                    int pivot = Partition(lista,left,right);
+                    if(pivot > 1){
+                        quicksort(lista,left,pivot-1);
+                    }
+                    if(pivot + 1< right){
+                        quicksort(lista,pivot+1,right);
+                    }
+                }
+            }
+            private static int Partition(List<int> lista,int left,int right){
+                int pivot = lista[left];
+                while(true){
+
+                    while(lista[left]< pivot){
+                        left++;
+                    }
+                    while(lista[right]>pivot){
+                        right--;
+                    }
+                    if(left < right){
+                        if(lista[left] == lista[right])return right;
+                        int temp = lista[left];
+                        lista[left]=lista[right];
+                        lista[right] = temp;
+                    }
+                    else{
+                        return right;
+                    }
+                }
+            }
+    
+       
     }
-}
+} 
