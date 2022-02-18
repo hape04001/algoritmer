@@ -16,13 +16,15 @@ namespace SorteringsAlgoritmer
             List<int> insRnd = new List<int>();
             List<int> mergeRnd = new List<int>();
             List<int> Qsrnd = new List<int>();
+            List<int> listsort = new List<int>();
 
             Stopwatch bblSW = new Stopwatch();
             Stopwatch insSW = new Stopwatch();
             Stopwatch mergeSW = new Stopwatch();
             Stopwatch QSsw = new Stopwatch();
+            Stopwatch Ls = new Stopwatch();
 
-            int antal = 8000;
+            int antal = 3000000;
 
             for (int i = 0; i < antal; i++)
             {
@@ -30,12 +32,13 @@ namespace SorteringsAlgoritmer
                 insRnd.Add(rnd.Next());
                 mergeRnd.Add(rnd.Next());
                 Qsrnd.Add(rnd.Next());
+                listsort.Add(rnd.Next());
             }
 
             // Bubblesort 
             int Length = bblRnd.Count;
             
-            bblSW.Start();
+            /*bblSW.Start();
             
             for(int bblA = 0; bblA < (Length - 1); bblA++){
                 for(int bblB = 0; bblB < (Length - 1 - bblA); bblB++){
@@ -64,10 +67,10 @@ namespace SorteringsAlgoritmer
                 insRnd[insB + 1] = key;
             }
 
-            insSW.Stop();
+            insSW.Stop();*/
 
             //Merge sort
-            mergeSW.Start();
+           /* mergeSW.Start();
 
             
             List<int> sorted;
@@ -77,7 +80,7 @@ namespace SorteringsAlgoritmer
 
             sorted = MergeSort(mergeRnd);
 
-            mergeSW.Stop();
+            mergeSW.Stop();*/
 
             QSsw.Start();
 
@@ -85,11 +88,17 @@ namespace SorteringsAlgoritmer
 
             QSsw.Stop();
             
+            Ls.Start();
+            
+           listsort.Sort(); 
+           
+            Ls.Stop();
             
             Console.WriteLine("Bubblesort: " + bblSW.ElapsedMilliseconds);
             Console.WriteLine("Insertionsort: " + insSW.ElapsedMilliseconds);
             Console.WriteLine("Merge sort: " + mergeSW.ElapsedMilliseconds);
             Console.WriteLine("Quick Sort: " + QSsw.ElapsedMilliseconds);
+            Console.WriteLine("list sort "+ Ls.ElapsedMilliseconds);
         }
 
         private static List<int> MergeSort(List<int> mergeRnd)
@@ -189,4 +198,4 @@ namespace SorteringsAlgoritmer
     
        
     }
-} 
+}
